@@ -14,18 +14,18 @@ const PROJECT_CATEGORIES = [
     items: [
       {
         title: "Sit Down Video 01",
-        type: "video",
-        src: "assets/videos/sit-down-01.mp4",
+        type: "youtube",
+        youtubeId: "LV8aFig1EV8",
       },
       {
         title: "Sit Down Video 02",
-        type: "video",
-        src: "assets/videos/sit-down-02.mp4",
+        type: "youtube",
+        youtubeId: "X4SHhiyoEXo",
       },
       {
         title: "Sit Down Video 03",
-        type: "video",
-        src: "assets/videos/sit-down-03.mp4",
+        type: "youtube",
+        youtubeId: "x6m9WJ1LUJs",
       },
     ],
   },
@@ -221,6 +221,19 @@ function renderProjects() {
 
   container.innerHTML = "";
 
+  const getYouTubeId = (value) => {
+    if (!value) {
+      return "";
+    }
+    if (value.length === 11 && !value.includes("http")) {
+      return value;
+    }
+    const match = String(value).match(
+      /(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/
+    );
+    return match ? match[1] : "";
+  };
+
   const hasItems = PROJECT_CATEGORIES.some((category) => category.items && category.items.length);
   if (!PROJECT_CATEGORIES.length || !hasItems) {
     const empty = document.createElement("div");
@@ -258,7 +271,25 @@ function renderProjects() {
       }
       card.dataset.aspect = item.aspect || "16/9";
 
-      if (item.type === "video") {
+      const youtubeId = getYouTubeId(item.youtubeId || item.youtubeUrl || "");
+      if (item.type === "youtube" && youtubeId) {
+        card.innerHTML = `
+          <div class="video-frame">
+            <iframe
+              src="https://www.youtube.com/embed/${youtubeId}?rel=0&modestbranding=1"
+              title="${item.title}"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+            ></iframe>
+          </div>
+          <div class="project-meta">
+            <h3>${item.title}</h3>
+            <p>${category.title}</p>
+          </div>
+        `;
+      } else if (item.type === "video") {
         const mime = item.mime || "video/mp4";
         const isLocalVideo = item.src && item.src.startsWith("assets/videos/");
         if (!IS_LOCAL && isLocalVideo) {

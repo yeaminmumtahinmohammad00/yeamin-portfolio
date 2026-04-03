@@ -607,6 +607,15 @@ h2 {
 
 .project-card .video-frame {
   width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.project-card iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  border-radius: inherit;
 }
 
 .project-card .video-frame.is-placeholder {
@@ -643,6 +652,7 @@ h2 {
 
 .project-card.is-vertical .video-frame {
   width: 100%;
+  aspect-ratio: 9 / 16;
 }
 
 .project-card.is-vertical .video-frame.is-placeholder {
