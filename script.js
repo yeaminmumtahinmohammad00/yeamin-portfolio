@@ -276,7 +276,8 @@ function renderProjects() {
         card.innerHTML = `
           <div class="video-frame">
             <iframe
-              src="https://www.youtube.com/embed/${youtubeId}?rel=0&modestbranding=1"
+              src="https://www.youtube.com/embed/${youtubeId}?rel=0&modestbranding=1&playsinline=1"
+              data-base="https://www.youtube.com/embed/${youtubeId}?rel=0&modestbranding=1&playsinline=1"
               title="${item.title}"
               loading="lazy"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -566,17 +567,32 @@ function setupActiveVideoOnCenter() {
       card.classList.toggle("is-active", isActive);
 
       const video = card.querySelector("video");
-      if (!video) {
-        return;
+      const iframe = card.querySelector("iframe");
+
+      if (video) {
+        if (isActive) {
+          const playPromise = video.play();
+          if (playPromise && typeof playPromise.catch === "function") {
+            playPromise.catch(() => {});
+          }
+        } else {
+          video.pause();
+        }
       }
 
-      if (isActive) {
-        const playPromise = video.play();
-        if (playPromise && typeof playPromise.catch === "function") {
-          playPromise.catch(() => {});
+      if (iframe) {
+        const base = iframe.dataset.base || iframe.getAttribute("src") || "";
+        if (!base) {
+          return;
         }
-      } else {
-        video.pause();
+        const autoplaySrc = base.includes("autoplay=1") ? base : `${base}&autoplay=1&mute=1`;
+        if (isActive) {
+          if (iframe.getAttribute("src") !== autoplaySrc) {
+            iframe.setAttribute("src", autoplaySrc);
+          }
+        } else if (iframe.getAttribute("src") !== base) {
+          iframe.setAttribute("src", base);
+        }
       }
     });
   };
