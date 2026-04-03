@@ -35,13 +35,13 @@ const PROJECT_CATEGORIES = [
     items: [
       {
         title: "Podcast Video 01",
-        type: "video",
-        src: "assets/videos/podcast-01.mp4",
+        type: "youtube",
+        youtubeId: "dUZh0--D_4w",
       },
       {
         title: "Podcast Video 02",
-        type: "video",
-        src: "assets/videos/podcast-02.mp4",
+        type: "youtube",
+        youtubeId: "45ON1iM-oD4",
       },
     ],
   },
