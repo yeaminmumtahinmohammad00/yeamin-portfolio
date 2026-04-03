@@ -51,13 +51,13 @@ const PROJECT_CATEGORIES = [
     items: [
       {
         title: "Gaming Video 01",
-        type: "video",
-        src: "assets/videos/gaming-01.mp4",
+        type: "youtube",
+        youtubeId: "zRM7as9D1rI",
       },
       {
         title: "Gaming Video 02",
-        type: "video",
-        src: "assets/videos/gaming-02.mp4",
+        type: "youtube",
+        youtubeId: "NKlyU0_eqZI",
       },
     ],
   },
@@ -67,14 +67,14 @@ const PROJECT_CATEGORIES = [
     items: [
       {
         title: "Reel Music Sync 01",
-        type: "video",
-        src: "assets/videos/reel-music-01.mp4",
+        type: "youtube",
+        youtubeId: "4p3bCN1Sgo4",
         aspect: "9/16",
       },
       {
         title: "Reel Music Sync 02",
-        type: "video",
-        src: "assets/videos/reel-music-02.mp4",
+        type: "youtube",
+        youtubeId: "AloCyp2HKek",
         aspect: "9/16",
       },
       {
